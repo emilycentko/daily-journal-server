@@ -50,7 +50,7 @@ def get_single_entry(id):
 
         data = db_cursor.fetchone()
 
-        entry = Entry(row['id'], row['date'], row['concept'],
-                            row['entry'], row['mood_id'])
+        entry = Entry(data['id'], data['date'], data['concept'],
+                            data['entry'], data['mood_id'])
 
-        return json.dumps(entry.__dict__)
+    return json.dumps(entry.__dict__)
