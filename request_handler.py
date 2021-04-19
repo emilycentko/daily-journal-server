@@ -1,7 +1,8 @@
 import json
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from entries import get_all_entries, get_single_entry
+from entries import get_all_entries, get_single_entry, delete_entry
+from moods import get_all_moods
 
 class HandleRequests(BaseHTTPRequestHandler):
 
@@ -35,6 +36,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
             else:
                 response = f"{get_all_entries()}"
+        
+        if resource == "moods":
+            response = f"{get_all_moods()}"
 
         self.wfile.write(response.encode())
     
@@ -51,6 +55,17 @@ class HandleRequests(BaseHTTPRequestHandler):
             pass 
 
         return (resource, id)  
+    
+    def do_DELETE(self):
+        # Set a 204 response code
+        self._set_headers(204)
+
+        (resource, id) = self.parse_url(self.path)
+
+        if resource == "entries":
+            delete_entry(id)
+
+        self.wfile.write("".encode())
 
 
 # This function is not inside the class. It is the starting
