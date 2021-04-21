@@ -24,3 +24,5 @@ INSERT INTO `Mood` VALUES (null, "Not too great");
 INSERT INTO `Mood` VALUES (null, "Okay");
 INSERT INTO `Mood` VALUES (null, "Pretty good");
 INSERT INTO `Mood` VALUES (null, "Great");
+
+SELECT * FROM Entry WHERE entry LIKE 'java%';
