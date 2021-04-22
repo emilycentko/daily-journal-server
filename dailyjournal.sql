@@ -26,3 +26,14 @@ INSERT INTO `Mood` VALUES (null, "Pretty good");
 INSERT INTO `Mood` VALUES (null, "Great");
 
 SELECT * FROM Entry WHERE entry LIKE 'java%';
+
+SELECT
+            e.id,
+            e.date,
+            e.concept,
+            e.entry,
+            e.mood_id,
+            m.label
+        FROM Entry e
+        JOIN Mood m
+            ON m.id = e.mood_id

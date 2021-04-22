@@ -1,7 +1,7 @@
 import json
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from entries import get_all_entries, get_single_entry, delete_entry, search_entry
+from entries import get_all_entries, get_single_entry, delete_entry, search_entry, create_entry
 from moods import get_all_moods
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -93,6 +93,21 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         self.wfile.write("".encode())
 
+    def do_POST(self):
+        self._set_headers(201)
+        content_len = int(self.headers.get('content-length', 0))
+        post_body = self.rfile.read(content_len)
+
+        post_body = json.loads(post_body)
+
+        (resource, id) = self.parse_url(self.path)
+
+        new_entry = None
+
+        if resource == "entries":
+            new_entry = create_entry(post_body)
+
+            self.wfile.write(f"{new_entry}".encode())
 
 # This function is not inside the class. It is the starting
 # point of this application.
